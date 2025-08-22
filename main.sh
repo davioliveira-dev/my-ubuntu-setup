@@ -96,6 +96,9 @@ install_icons() {
 }
 
 setup_dev_tools() {
+    # deps
+    sudo apt install -y git curl wget unzip build-essential
+
     # starship
     curl -sS https://starship.rs/install.sh | sh
 
