@@ -162,7 +162,7 @@ setup_dev_tools() {
     $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
-    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     sudo usermod -aG docker "$USER"
 
     # ghostty
@@ -173,6 +173,9 @@ setup_dev_tools() {
     sudo apt-add-repository ppa:fish-shell/release-4
     sudo apt update
     sudo apt install -y fish
+
+    # dotfiles
+    setup_dotfiles
 }
 
 setup_dotfiles() {
@@ -181,10 +184,11 @@ setup_dotfiles() {
     cp -r ~/.dotfiles/. ~/
     # Removes the dotfiles folder
     rm -rf ~/.dotfiles
+    rm -rf ~/.git
 }
 
 install_flatpaks() {
-    flatpak install -y ev.vencord.Vesktop io.beekeeperstudio.Studio io.github.flattool.Ignition dev.deedles.Trayscale org.gnome.World.PikaBackup io.gitlab.librewolf-community dev.qwery.AddWater org.localsend.localsend_app com.microsoft.Edge md.obsidian.Obsidian
+    flatpak install -y dev.vencord.Vesktop io.beekeeperstudio.Studio io.github.flattool.Ignition dev.deedles.Trayscale org.gnome.World.PikaBackup io.gitlab.librewolf-community dev.qwery.AddWater org.localsend.localsend_app com.microsoft.Edge md.obsidian.Obsidian
 }
 
 ask_reboot() {
