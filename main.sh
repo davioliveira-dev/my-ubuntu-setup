@@ -119,6 +119,7 @@ setup_dev_tools() {
     curl https://mise.run | sh
     echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
     ~/.local/bin/mise use --global node@22
+    source ~/.bashrc
     npm i -g npm pnpm bun
 
     # Opencoed
