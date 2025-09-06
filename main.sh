@@ -148,8 +148,6 @@ setup_dev_tools() {
 
     # wireguard
     sudo apt install -y wireguard
-    wget -O /tmp/wireguird_amd64.deb https://github.com/UnnoTed/wireguird/releases/download/v1.1.0/wireguird_amd64.deb
-    sudo dpkg -i /tmp/wireguird_amd64.deb
 
     # zed
     curl -f https://zed.dev/install.sh | sh
