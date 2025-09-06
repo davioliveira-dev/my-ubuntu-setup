@@ -2,8 +2,6 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
-# TODO: Migrate everything to nixpkgs and use nix-shell to run the script
-
 disable_ubuntu_report() {
     sudo ubuntu-report send no
     sudo apt remove ubuntu-report -y
@@ -109,7 +107,6 @@ manage_extensions() {
     
     # Install GNOME extensions
     gext install AlphabeticalAppGrid@stuarthayhurst
-    gext install alt-tab-current-monitor@esauvisky.github.io
     gext install appindicatorsupport@rgcjonas.gmail.com
     gext install blur-my-shell@aunetx
     gext install boostvolume@shaquib.dev
@@ -118,38 +115,6 @@ manage_extensions() {
     gext install light-style@gnome-shell-extensions.gcampax.github.com
     gext install tilling-assistant@leleat-on-github
     gext install tophat@fflewddur.github.io
-    gext install window-desaturation@mkhl.codeberg.page
-}
-
-# TODO: This is a temporary solution to fix the issue with the NVIDIA GPU lagging GNOME animations when idle.
-setup_nvidia_startup() {
-    # Create the nvidia configuration script
-    sudo tee /usr/local/bin/nvidia-startup.sh > /dev/null << 'EOF'
-#!/usr/bin/env bash
-sudo nvidia-smi -lmc 2000,2460
-EOF
-    
-    # Make the script executable
-    sudo chmod +x /usr/local/bin/nvidia-startup.sh
-    
-    # Create the systemd service
-    sudo tee /etc/systemd/system/nvidia-startup.service > /dev/null << 'EOF'
-[Unit]
-Description=NVIDIA GPU Configuration on Startup
-After=graphical.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/nvidia-startup.sh
-RemainAfterExit=yes
-
-[Install]
-WantedBy=graphical.target
-EOF
-    
-    # Reload systemd and enable the service
-    sudo systemctl daemon-reload
-    sudo systemctl enable nvidia-startup.service
 }
 
 setup_dev_tools() {
@@ -233,6 +198,13 @@ setup_dev_tools() {
     sudo apt-add-repository ppa:fish-shell/release-4
     sudo apt update
     sudo apt install -y fish
+
+    # tailscale
+	curl -fsSL https://tailscale.com/install.sh | sh
+
+    # allow any connection in/out for local network
+	sudo ufw allow in from 192.168.1.0/24
+    sudo ufw allow out to 192.168.1.0/24
 
     # dotfiles
     setup_dotfiles
@@ -333,8 +305,6 @@ auto() {
     install_icons
     msg 'Installing dev tools'
     setup_dev_tools
-    msg 'Setting up NVIDIA startup configuration'
-    setup_nvidia_startup
     msg 'Installing flatpaks'
     install_flatpaks
     msg 'Cleaning up'
