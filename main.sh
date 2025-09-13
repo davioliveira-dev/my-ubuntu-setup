@@ -3,7 +3,6 @@
 set -e  # Exit immediately if a command exits with a non-zero status
 
 disable_ubuntu_report() {
-    sudo ubuntu-report send no
     sudo apt remove ubuntu-report -y
 }
 
