@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e  # Exit immediately if a command exits with a non-zero status
-
 disable_ubuntu_report() {
     sudo apt remove ubuntu-report -y
 }
