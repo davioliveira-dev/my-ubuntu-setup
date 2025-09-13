@@ -218,7 +218,7 @@ setup_dotfiles() {
 }
 
 install_flatpaks() {
-    flatpak install -y dev.vencord.Vesktop io.beekeeperstudio.Studio io.github.flattool.Ignition dev.deedles.Trayscale org.gnome.World.PikaBackup io.gitlab.librewolf-community dev.qwery.AddWater org.localsend.localsend_app com.microsoft.Edge md.obsidian.Obsidian it.mijorus.gearlever io.github.vikdevelop.SaveDesktop
+    flatpak install -y dev.vencord.Vesktop io.beekeeperstudio.Studio io.github.flattool.Ignition dev.deedles.Trayscale org.localsend.localsend_app com.microsoft.Edge md.obsidian.Obsidian it.mijorus.gearlever io.github.vikdevelop.SaveDesktop
 }
 
 ask_reboot() {
